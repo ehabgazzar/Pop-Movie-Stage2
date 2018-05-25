@@ -4,7 +4,7 @@
     android:visibility="invisible"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eh.movietest.DetailActivity">
+    tools:context="example.nano.pop_movie_stage2.DetailActivity">
 
 
     <LinearLayout

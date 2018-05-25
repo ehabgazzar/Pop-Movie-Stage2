@@ -160,6 +160,15 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
                                 movieSortBy = Urls.SORT_BY_TOP_RATED;
                                 updateMovies(movieSortBy);
                                 return true;
+                            case R.id.action_sort_by_favorite:
+                                if (item.isChecked()) {
+                                    item.setChecked(false);
+                                } else {
+                                    item.setChecked(true);
+                                }
+                                movieSortBy = FAVORITE;
+                                updateMovies(movieSortBy);
+                                return true;
 
 
 
@@ -171,6 +180,27 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
         allItems=new ArrayList<>();
         mContext=this.getActivity();
         gson=new Gson();
+        movieAdapter = new MovieAdapter(getActivity(), allItems, new ClickListener() {
+            @Override
+            public void onPositionClicked(int position) {
+                MovieItem movie = (MovieItem) allItems.get(position);
+                ((Callback) getActivity()).onItemSelected(movie);
+            }
+        });
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SORT_SETTING_KEY)) {
+                movieSortBy = savedInstanceState.getString(SORT_SETTING_KEY);
+            }
+
+            if (savedInstanceState.containsKey(MOVIES_KEY)) {
+                allItems = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
+                movieAdapter.setData(allItems);
+            } else {
+                updateMovies(movieSortBy);
+            }
+        } else {
+            updateMovies(movieSortBy);
+        }
         return view ;
     }
 

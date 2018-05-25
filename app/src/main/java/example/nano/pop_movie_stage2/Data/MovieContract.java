@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
  * Created by EH on 1/31/2016.
  */
 public class MovieContract {
-    public static final String CONTENT_AUTHORITY = "com.example.eh.movietest";
+    public static final String CONTENT_AUTHORITY = "example.nano.pop_movie_stage2";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
