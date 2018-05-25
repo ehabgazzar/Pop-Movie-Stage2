@@ -89,45 +89,7 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
         setHasOptionsMenu(true);
     }
 
-    /*@Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        inflater.inflate(R.menu.menu_fragment_main, menu);
-        MenuItem action_sort_by_popularity = menu.findItem(R.id.action_sort_by_popularity);
-        action_sort_by_popularity.setChecked(true);
-        MenuItem action_sort_by_rating = menu.findItem(R.id.action_sort_by_rating);
-
-    }*/
-
-   /* @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_sort_by_popularity:
-                if (item.isChecked()) {
-                    item.setChecked(false);
-                } else {
-                    item.setChecked(true);
-                }
-                movieSortBy = Urls.SORT_BY_POPULAR;
-                updateMovies(movieSortBy);
-                return true;
-            case R.id.action_sort_by_rating:
-                if (item.isChecked()) {
-                    item.setChecked(false);
-                } else {
-                    item.setChecked(true);
-                }
-                movieSortBy = Urls.SORT_BY_TOP_RATED;
-                updateMovies(movieSortBy);
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -219,6 +181,8 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
         }
         super.onSaveInstanceState(outState);
     }
+
+
     void updateMovies(String sort_by)
     {
         if (!sort_by.contentEquals(FAVORITE)) {
@@ -314,13 +278,7 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
 
         @Override
         protected void onPostExecute(List<MovieItem> movies) {
-            movieAdapter = new MovieAdapter(getActivity(),allItems , new ClickListener() {
-                @Override
-                public void onPositionClicked(int position) {
-                    MovieItem movie = (MovieItem) allItems.get(position);
-                    ((Callback) getActivity()).onItemSelected(movie);
-                }
-            });
+
             if (movies != null) {
                 if (movieAdapter != null) {
                     movieAdapter.setData(movies);
