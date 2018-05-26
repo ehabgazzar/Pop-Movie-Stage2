@@ -142,32 +142,33 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
         allItems=new ArrayList<>();
         mContext=this.getActivity();
         gson=new Gson();
-        movieAdapter = new MovieAdapter(getActivity(), allItems, new ClickListener() {
-            @Override
-            public void onPositionClicked(int position) {
-                MovieItem movie = (MovieItem) allItems.get(position);
-                ((Callback) getActivity()).onItemSelected(movie);
-            }
-        });
-        if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(SORT_SETTING_KEY)) {
-                movieSortBy = savedInstanceState.getString(SORT_SETTING_KEY);
-            }
-
-            if (savedInstanceState.containsKey(MOVIES_KEY)) {
-                allItems = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
-                movieAdapter.setData(allItems);
-            } else {
-                updateMovies(movieSortBy);
-            }
-        } else {
-            updateMovies(movieSortBy);
-        }
+//        movieAdapter = new MovieAdapter(getActivity(), allItems, new ClickListener() {
+//            @Override
+//            public void onPositionClicked(int position) {
+//                MovieItem movie = (MovieItem) allItems.get(position);
+//                ((Callback) getActivity()).onItemSelected(movie);
+//            }
+//        });
+//        if (savedInstanceState != null) {
+//            if (savedInstanceState.containsKey(SORT_SETTING_KEY)) {
+//                movieSortBy = savedInstanceState.getString(SORT_SETTING_KEY);
+//            }
+//
+//            if (savedInstanceState.containsKey(MOVIES_KEY)) {
+//                allItems = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
+//                movieAdapter.setData(allItems);
+//            } else {
+//                updateMovies(movieSortBy);
+//            }
+//        } else {
+//            updateMovies(movieSortBy);
+//        }
         return view ;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         updateMovies(Urls.SORT_BY_POPULAR);
         super.onViewCreated(view, savedInstanceState);
     }

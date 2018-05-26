@@ -22,10 +22,10 @@ import example.nano.pop_movie_stage2.models.MovieItem;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
 
-    private final Context moiveContext;
-    private final LayoutInflater movieInflater;
+    private  Context moiveContext;
+    private  LayoutInflater movieInflater;
     private  ClickListener listener;
-    private final MovieItem movie = new MovieItem();
+//    private  MovieItem movie = new MovieItem();
 
     private List<MovieItem> movieObjects;
 
@@ -65,7 +65,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = movieInflater.inflate(R.layout.movie_item, parent, false);
-        final MovieAdapter.ViewHolder viewHolder = new MovieAdapter.ViewHolder(view, listener);
+         MovieAdapter.ViewHolder viewHolder = new MovieAdapter.ViewHolder(view, listener);
 
         return viewHolder;
     }

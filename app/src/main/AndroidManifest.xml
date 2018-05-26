@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="example.nano.pop_movie_stage2.MainActivity"
-            android:screenOrientation="portrait">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
