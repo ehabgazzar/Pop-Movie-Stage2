@@ -44,6 +44,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             movieObjects.add(object);
       }
 
+    public MovieItem getItem(int position) {
+        return movieObjects.get(position);
+    }
 
 
     public void clear() {

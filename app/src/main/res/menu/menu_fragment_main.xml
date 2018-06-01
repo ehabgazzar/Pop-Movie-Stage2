@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<!--    <item android:id="@+id/action_sort_by"
+    <item android:id="@+id/action_sort_by"
         android:title="@string/action_sort_by"
         app:showAsAction="collapseActionView">
         <menu>
@@ -9,9 +9,11 @@
                     android:title="@string/action_sort_by_popularity" />
                 <item android:id="@+id/action_sort_by_rating"
                     android:title="@string/action_sort_by_rating" />
+                <item android:id="@+id/action_sort_by_favorite"
+                    android:title="@string/action_sort_by_favorite" />
 
 
             </group>
         </menu>
-    </item>-->
+    </item>
 </menu>

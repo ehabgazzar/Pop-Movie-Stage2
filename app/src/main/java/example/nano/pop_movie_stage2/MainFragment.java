@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,12 +41,12 @@ import example.nano.pop_movie_stage2.utilities.Urls;
 import example.nano.pop_movie_stage2.utilities.Utility;
 
 
-public class MainFragment extends Fragment  implements AdapterView.OnItemClickListener{
+public class MainFragment extends Fragment{
 
 
     private NetHelper mNetHelper;
     Context mContext;
-    ArrayList<MovieItem> allItems;
+    ArrayList<MovieItem> allItems = null;
     MovieAdapter movieAdapter;
     private RecyclerView recyclerView;
     Gson gson;
@@ -75,10 +76,14 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
     public static final int COL_OVERVIEW = 5;
     public static final int COL_RATING = 6;
     public static final int COL_DATE = 7;
+    private BottomNavigationView bottomNavigationView;
+//    private BottomNavigationView bottomNavigationView;
 
     public MainFragment() {
         // Required empty public constructor
     }
+
+
 
     public interface Callback {
         void onItemSelected(MovieItem movie);
@@ -86,62 +91,148 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+       // setHasOptionsMenu(true);
+
     }
 
+  /*  @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment_main, menu);
+        MenuItem action_sort_by_popularity = menu.findItem(R.id.action_sort_by_popularity);
+        MenuItem action_sort_by_rating = menu.findItem(R.id.action_sort_by_rating);
+        MenuItem action_sort_by_favorite = menu.findItem(R.id.action_sort_by_favorite);
+
+
+        if (movieSortBy.contentEquals(POPULARITY_DESC)) {
+            if (!action_sort_by_popularity.isChecked()) {
+                action_sort_by_popularity.setChecked(true);
+            }
+        } else if (movieSortBy.contentEquals(RATING_DESC)) {
+            if (!action_sort_by_rating.isChecked()) {
+                action_sort_by_rating.setChecked(true);
+            }
+        } else if (movieSortBy.contentEquals(FAVORITE)) {
+            if (!action_sort_by_popularity.isChecked()) {
+                action_sort_by_favorite.setChecked(true);
+            }
+
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Log.e("onOptionsItemSelected",id+" is");
+        switch (id) {
+            case R.id.action_sort_by_popularity:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setChecked(true);
+                }
+                movieSortBy = POPULARITY_DESC;
+                updateMovies(movieSortBy);
+                return true;
+            case R.id.action_sort_by_rating:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setChecked(true);
+                }
+                movieSortBy = RATING_DESC;
+                updateMovies(movieSortBy);
+                return true;
+            case R.id.action_sort_by_favorite:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setChecked(true);
+                }
+                movieSortBy = FAVORITE;
+                updateMovies(movieSortBy);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mNetHelper= NetHelper.getInstance(this.getActivity());
         View view=inflater.inflate(R.layout.fragment_main, container, false);
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                getActivity().findViewById(R.id.navigation);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener
-                (new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        int id = item.getItemId();
-                        switch (id) {
-                            case R.id.action_sort_by_popularity:
-                                if (item.isChecked()) {
-                                    item.setChecked(false);
-                                } else {
-                                    item.setChecked(true);
-                                }
-                                movieSortBy = Urls.SORT_BY_POPULAR;
-                                updateMovies(movieSortBy);
-                                return true;
-                            case R.id.action_sort_by_rating:
-                                if (item.isChecked()) {
-                                    item.setChecked(false);
-                                } else {
-                                    item.setChecked(true);
-                                }
-                                movieSortBy = Urls.SORT_BY_TOP_RATED;
-                                updateMovies(movieSortBy);
-                                return true;
-                            case R.id.action_sort_by_favorite:
-                                if (item.isChecked()) {
-                                    item.setChecked(false);
-                                } else {
-                                    item.setChecked(true);
-                                }
-                                movieSortBy = FAVORITE;
-                                updateMovies(movieSortBy);
-                                return true;
 
 
+            bottomNavigationView = (BottomNavigationView)
+                    getActivity().findViewById(R.id.navigation);
+            bottomNavigationView.setOnNavigationItemSelectedListener
+                    (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                            int id = item.getItemId();
+                            Log.e("onNavigationItemSelect",id+" is");
+                            switch (id) {
+                                case R.id.action_sort_by_popularity:
+                                    if (item.isChecked()) {
+                                        item.setChecked(false);
+                                    } else {
+                                        item.setChecked(true);
+                                    }
+                                    movieSortBy = Urls.SORT_BY_POPULAR;
+                                    updateMovies(movieSortBy);
+                                    return true;
+                                case R.id.action_sort_by_rating:
+                                    if (item.isChecked()) {
+                                        item.setChecked(false);
+                                    } else {
+                                        item.setChecked(true);
+                                    }
+                                    movieSortBy = Urls.SORT_BY_TOP_RATED;
+                                    updateMovies(movieSortBy);
+                                    return true;
+                                case R.id.action_sort_by_favorite:
+                                    if (item.isChecked()) {
+                                        item.setChecked(false);
+                                    } else {
+                                        item.setChecked(true);
+                                    }
+                                    movieSortBy = FAVORITE;
+                                    updateMovies(movieSortBy);
+                                    return true;
 
+
+
+                            }
+                            return true;
                         }
-                        return true;
-                    }
-                });
-         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        allItems=new ArrayList<>();
+                    });
+
+
+//        bottomNavigationView.setNavigationItemSelectedListener
+
+
         mContext=this.getActivity();
         gson=new Gson();
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        movieAdapter = new MovieAdapter(getActivity(),  new ArrayList<MovieItem>(), new ClickListener() {
+            @Override
+            public void onPositionClicked(int position) {
+                MovieItem movie = movieAdapter.getItem(position);
+                ((Callback) getActivity()).onItemSelected(movie);
+            }
+        });
+        int mNoOfColumns = Utility.calculateNoOfColumns(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), mNoOfColumns);
+        recyclerView.setLayoutManager(mLayoutManager);
+//                recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+//                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+//                        linearLayoutManager.getOrientation());
+//                recyclerView.addItemDecoration(dividerItemDecoration);
+
+        recyclerView.setAdapter(movieAdapter);
 //        movieAdapter = new MovieAdapter(getActivity(), allItems, new ClickListener() {
 //            @Override
 //            public void onPositionClicked(int position) {
@@ -149,39 +240,37 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
 //                ((Callback) getActivity()).onItemSelected(movie);
 //            }
 //        });
-//        if (savedInstanceState != null) {
-//            if (savedInstanceState.containsKey(SORT_SETTING_KEY)) {
-//                movieSortBy = savedInstanceState.getString(SORT_SETTING_KEY);
-//            }
-//
-//            if (savedInstanceState.containsKey(MOVIES_KEY)) {
-//                allItems = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
-//                movieAdapter.setData(allItems);
-//            } else {
-//                updateMovies(movieSortBy);
-//            }
-//        } else {
-//            updateMovies(movieSortBy);
-//        }
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SORT_SETTING_KEY)) {
+                movieSortBy = savedInstanceState.getString(SORT_SETTING_KEY);
+                Log.e("movieSortBy",movieSortBy+" is");
+            }
+
+            if (savedInstanceState.containsKey(MOVIES_KEY)) {
+                allItems = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
+                movieAdapter.setData(allItems);
+            } else {
+                updateMovies(movieSortBy);
+            }
+        } else {
+            updateMovies(movieSortBy);
+        }
         return view ;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        updateMovies(Urls.SORT_BY_POPULAR);
-        super.onViewCreated(view, savedInstanceState);
-    }
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (!movieSortBy.contentEquals(POPULARITY_DESC)) {
             outState.putString(SORT_SETTING_KEY, movieSortBy);
+            Log.e("putString",movieSortBy);
         }
         if (allItems != null) {
             outState.putParcelableArrayList(MOVIES_KEY, allItems);
         }
         super.onSaveInstanceState(outState);
     }
+
 
 
     void updateMovies(String sort_by)
@@ -197,30 +286,19 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
                         jsonObject = new JSONObject(response);
                         JSONArray resultsArr = jsonObject.getJSONArray("results");
 
-
-                        allItems.clear();
+                        allItems=new ArrayList<>();
                         //  allItems= JsonParser.getInstnace(mContext).fetchMovies(response);
                         allItems = gson.fromJson(String.valueOf(resultsArr), new TypeToken<List<MovieItem>>() {
                         }.getType());
-                        movieAdapter = new MovieAdapter(getActivity(), allItems, new ClickListener() {
-                            @Override
-                            public void onPositionClicked(int position) {
-                                MovieItem movie = (MovieItem) allItems.get(position);
-                                ((Callback) getActivity()).onItemSelected(movie);
+
+                        if (allItems != null) {
+                            if (movieAdapter != null) {
+                                movieAdapter.setData(allItems);
                             }
-                        });
-                        int mNoOfColumns = Utility.calculateNoOfColumns(getContext());
-                        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), mNoOfColumns);
-                        recyclerView.setLayoutManager(mLayoutManager);
-//                recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-//                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-//                        linearLayoutManager.getOrientation());
-//                recyclerView.addItemDecoration(dividerItemDecoration);
+                        }
 
-                        recyclerView.setAdapter(movieAdapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -239,10 +317,7 @@ public class MainFragment extends Fragment  implements AdapterView.OnItemClickLi
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-    }
 
 
     public class FetchFavoriteMoviesTask extends AsyncTask<Void, Void, List<MovieItem>> {
