@@ -18,7 +18,7 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'tmdb_api_key',"\"7614be502fd2dea962138d2068b5c7dc\""
+        it.buildConfigField 'String', 'tmdb_api_key',"\"EnterKeyHere\""
     }
 }
 
